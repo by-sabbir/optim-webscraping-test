@@ -1,11 +1,15 @@
 package scraper
 
-import "errors"
+import (
+	"errors"
+	"log/slog"
+)
 
 var ErrNotImplemented = errors.New("specified scraper service not yet implemented")
 
 type GuardianScraperService struct {
-	Name string
+	Name   string
+	Logger *slog.Logger
 }
 
 type CNNScraperService struct {
@@ -24,10 +28,12 @@ type ScrapedItem struct {
 
 func NewScraperService(name string) (ScraperFactory, error) {
 
+	logger := slog.New(slog.Default().Handler())
 	switch {
 	case name == "guardian":
 		return &GuardianScraperService{
-			Name: name,
+			Name:   name,
+			Logger: logger,
 		}, nil
 	case name == "cnn":
 		return nil, ErrNotImplemented
