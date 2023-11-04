@@ -1,3 +1,4 @@
+// Scraper provides interface for multiple domain specific scraping service
 package scraper
 
 import (
@@ -13,7 +14,8 @@ type GuardianScraperService struct {
 }
 
 type CNNScraperService struct {
-	Name string
+	Name   string
+	Logger *slog.Logger
 }
 
 type ScraperFactory interface {
@@ -26,6 +28,7 @@ type ScrapedItem struct {
 	Images []string `json:"images"`
 }
 
+// initiates a new scraper service
 func NewScraperService(name string) (ScraperFactory, error) {
 
 	logger := slog.New(slog.Default().Handler())
@@ -36,6 +39,11 @@ func NewScraperService(name string) (ScraperFactory, error) {
 			Logger: logger,
 		}, nil
 	case name == "cnn":
+		return &CNNScraperService{
+			Name:   name,
+			Logger: logger,
+		}, nil
+	default:
 		return nil, ErrNotImplemented
 	}
 

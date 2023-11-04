@@ -2,42 +2,46 @@ package main
 
 import (
 	"fmt"
+	"log/slog"
 
 	"github.com/by-sabbir/optim-webscraping-test/scraper"
 )
 
 func main() {
-	gUrl := "https://www.theguardian.com/politics/2018/aug/19/brexit-tory-mps-warn-of-entryism-threat-from-leave-eu-supporters"
+	logger := slog.New(slog.Default().Handler())
 
-	guardianScraper, err := scraper.NewScraperService("guardian")
-	if err != nil {
-		fmt.Println("error: ", err)
-		return
+	if err := run(); err != nil {
+		logger.Error("something went wrong", "error", err)
 	}
+}
 
-	items, err := guardianScraper.ScrapePage(gUrl)
-	if err != nil {
-		fmt.Println("error sracping: ", err)
-		return
-	}
-
-	fmt.Println("items: ", items.Images, items.Title)
-
+func run() error {
+	guardianUrl := "https://www.theguardian.com/politics/2018/aug/19/brexit-tory-mps-warn-of-entryism-threat-from-leave-eu-supporters"
 	cnnUrl := "https://edition.cnn.com/travel/airbus-overhead-airspace-l-bins/index.html"
 
-	cnnScraper, err := scraper.NewScraperService("cnn")
+	if err := scrape(guardianUrl, "guardian"); err != nil {
+		return err
+	}
+	if err := scrape(cnnUrl, "cnn"); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func scrape(url string, scraperName string) error {
+	scraperServcie, err := scraper.NewScraperService(scraperName)
 	if err != nil {
 		fmt.Println("error: ", err)
-		return
+		return err
 	}
 
-	items, err = cnnScraper.ScrapePage(cnnUrl)
+	items, err := scraperServcie.ScrapePage(url)
 	if err != nil {
 		fmt.Println("error sracping: ", err)
-		return
+		return err
 	}
 
-	fmt.Println("items: ", items.Images, items.Title)
-
-	defer fmt.Println("done scraping")
+	defer fmt.Println("scraped items: ", items.Images, items.Title)
+	return nil
 }
