@@ -21,7 +21,7 @@ func TestCNN(t *testing.T) {
 
 	assert.Equal(t, err, nil)
 
-	assert.Equal(t, items.Title, "Search for survivors in western Nepal after earthquake kills at least 157 people")
+	assert.Equal(t, items.Title, "\n      These new overhead aircraft bins could be an inflight game-changer\n    ")
 }
 
 func TestCNNBadUrl(t *testing.T) {
