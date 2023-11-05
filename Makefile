@@ -1,7 +1,7 @@
 .PHONY:
 
 SERVICE_NAME := scraper
-VERSION := v0.0.1
+VERSION := $(shell git describe --tags --abbrev=0)
 
 build:
 	docker build \
