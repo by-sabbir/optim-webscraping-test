@@ -23,6 +23,20 @@ func (s *CNNScraperService) ScrapePage(url string) (*ScrapedItem, error) {
 		s.Logger.Info("response", "status_code", r.StatusCode, "url", url)
 	})
 
+	c.OnHTML("meta", func(h *colly.HTMLElement) {
+		doc := h.DOM
+		doc.Each(func(i int, s *goquery.Selection) {
+			if name, _ := s.Attr("name"); name == "description" {
+				description, _ := s.Attr("content")
+				cItems.Metadata.Description = description
+			}
+			if name, _ := s.Attr("property"); name == "article:tag" {
+				tags, _ := s.Attr("content")
+				cItems.Metadata.Tags = tags
+			}
+		})
+	})
+
 	c.OnHTML("h1", func(h *colly.HTMLElement) {
 		title := h.Text
 		cItems.Title = title

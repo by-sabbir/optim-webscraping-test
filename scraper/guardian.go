@@ -25,6 +25,19 @@ func (s *GuardianScraperService) ScrapePage(url string) (*ScrapedItem, error) {
 		s.Logger.Info("response", "status_code", r.StatusCode, "url", url)
 	})
 
+	c.OnHTML("meta", func(h *colly.HTMLElement) {
+		doc := h.DOM
+		doc.Each(func(i int, s *goquery.Selection) {
+			if name, _ := s.Attr("name"); name == "description" {
+				description, _ := s.Attr("content")
+				gItems.Metadata.Description = description
+			}
+			if name, _ := s.Attr("property"); name == "article:tag" {
+				tags, _ := s.Attr("content")
+				gItems.Metadata.Tags = tags
+			}
+		})
+	})
 	c.OnHTML("article", func(h *colly.HTMLElement) {
 
 		imgs := h.DOM.Find("img")

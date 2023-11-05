@@ -4,7 +4,9 @@ go 1.21.3
 
 require (
 	github.com/PuerkitoBio/goquery v1.5.1
+	github.com/dslipak/pdf v0.0.1
 	github.com/gocolly/colly v1.2.0
+	github.com/ledongthuc/pdf v0.0.0-20220302134840-0c2507a12d80
 	github.com/spf13/cobra v1.8.0
 )
 
