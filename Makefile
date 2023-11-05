@@ -12,3 +12,6 @@ build:
 
 binary:
 	go build -ldflags "-X main.build=${BUILD_REF}"
+
+test:
+	go test -cover ./...

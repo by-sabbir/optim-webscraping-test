@@ -65,6 +65,4 @@ func NewScraperService(name string) (ScraperFactory, error) {
 	default:
 		return nil, ErrNotImplemented
 	}
-
-	return nil, ErrNotImplemented
 }
