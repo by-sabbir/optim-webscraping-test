@@ -14,7 +14,7 @@ var logger = slog.New(slog.Default().Handler())
 
 var rootCmd = &cobra.Command{
 	Use:   "scrape",
-	Short: "Optimizely Content Intelligence and the Web",
+	Short: "\nOptimizely Content Intelligence and the Web",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			cmd.Help()
