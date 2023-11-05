@@ -4,10 +4,9 @@ go 1.21.3
 
 require (
 	github.com/PuerkitoBio/goquery v1.5.1
-	github.com/dslipak/pdf v0.0.1
 	github.com/gocolly/colly v1.2.0
-	github.com/ledongthuc/pdf v0.0.0-20220302134840-0c2507a12d80
 	github.com/spf13/cobra v1.8.0
+	github.com/stretchr/testify v1.8.4
 )
 
 require (
@@ -25,10 +24,10 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/saintfish/chardet v0.0.0-20120816061221-3af4cd4741ca // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/stretchr/testify v1.8.4 // indirect
 	github.com/temoto/robotstxt v1.1.1 // indirect
 	golang.org/x/net v0.15.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

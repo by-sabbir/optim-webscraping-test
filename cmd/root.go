@@ -53,7 +53,7 @@ func scrape(url string, scraperName string) error {
 		return err
 	}
 
-	b, err := json.Marshal(items.Metadata)
+	b, err := json.Marshal(items)
 	if err != nil {
 		logger.Error("could not marshall json", "error", err)
 		return err
