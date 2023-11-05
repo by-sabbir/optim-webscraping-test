@@ -44,43 +44,32 @@ docker run -it --rm scraper:v0.0.1 scraper scrape -p guardian -u https://www.the
 
 This will scrap the spcified URL and return json with following template -
 
-```go
-type Metadata struct {
-    Description string `json:"description"`
-    Tags        string `json:"tags"`
+```js
+// JSON template
+{
+    "metadata": {
+        "description": "string",
+        "tags": "string"
+    },
+    "title": "string",
+    "body": "string",
+    "images": ["string"]
 }
-type ScrapedItem struct {
-    Metadata `json:"metadata"`
-    Title    string   `json:"title"`
-    Body     string   `json:"body"`
-    Images   []string `json:"images"`
-}
+
 ```
 
 ## Design Decisions
 
 #### Language and Libraries
 
-- Go
-  - Scraping system often requires high-scalability, concurrent execution for speed, and ability to process large volume of sreams. Considering these features Go seemed the best choice for me.
-- Colly
-  - The most reliable web-scraping framework for Go
-- goquery
-  - jQuery like DOM selector, also used in Colly
+- **Go**: Chosen for its high-scalability, concurrent execution, and efficiency in processing large volumes of streams.
+- **Colly**: A reliable web scraping framework for Go.
+- **goquery**: Provides a jQuery-like DOM selector and is used in Colly.
+
 
 #### Design Pattern
 
-Clearly the problem falls into "Creational Design Pattern" as We will have a scraper which should be able to scrap different types of web pages. So, our primary object/class will provide an interface to create subclasses that will be allowed to alter the html pages as the subclassses are deligated to.
-
-Before considering the specific design patter, I first set a few rules/policies for the project -
-
-- The implementation should be concrete in terms of data
-- Ease of configuration (Rate Limiting, Domain whitelising, API Key etc)
-- Robust error handling and logging
-- Flexibility and extensiblity without loosing readability, often scraping for different domain loose readability with time. I wanted to avoid this.
-- Should be easily testable.
-
-with these policies in mind, I went for factory pattern to implement the scraper. In this assessment, I have implemented two example factories for scraping CNN and The Guardian.
+The **Factory Pattern** is employed to create different web scrapers for various domains. This design allows for flexibility and extensibility without compromising readability. In this assessment, I have implemented two example factories for scraping CNN and The Guardian.
 
 #### Implementation
 
